@@ -121,6 +121,7 @@ void DataSetVOC::loadBox(const FileNode &fn, vector<Vec4i> &boxes, vecI &clsIdx)
 
 	string clsName;
 	fn["name"]>>clsName;
+	printf("Class name: %s", clsName.c_str());
 	clsIdx.push_back(findFromList(clsName, classNames));	
 	CV_Assert_(clsIdx[clsIdx.size() - 1] >= 0, ("Invalidate class name\n"));
 }
