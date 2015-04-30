@@ -24,4 +24,5 @@ make -j$NCPUS -w
 #################################
 echo 'Moving the shared library'
 cp -v lib* ../pybing
+cp -v bing ../
 cd ..
