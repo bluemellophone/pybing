@@ -1,7 +1,14 @@
-project(BING_linux)
 cmake_minimum_required(VERSION 2.8)
+project(BING_linux)
 
-find_package(OpenMP REQUIRED)
+if (APPLE)
+    #MacPorts
+    message("USING MACPORTS")
+    include_directories(/opt/local/include)
+    link_directories(/opt/local/lib)
+endif()
+
+# find_package(OpenMP)
 
 add_library(LIBLINEAR LibLinear/linear.cpp LibLinear/linear.h LibLinear/train.c LibLinear/tron.cpp LibLinear/tron.h)
 add_library(BLAS LibLinear/blas/blas.h LibLinear/blas/blasp.h LibLinear/blas/daxpy.c LibLinear/blas/ddot.c LibLinear/blas/dnrm2.c LibLinear/blas/dscal.c)

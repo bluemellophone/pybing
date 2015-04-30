@@ -485,7 +485,7 @@ void Objectness::trainStateII(int numPerSz)
 	for (int i = 0; i < NUM_SZ; i++){
 		const vecM &xP = rXP[i], &xN = rXN[i];
 		if (xP.size() < 10 || xN.size() < 10)
-			printf("Warning %s:%d not enough training sample for r[%d] = %d. P = %d, N = %d\n", __FILE__, __LINE__, i, _svmSzIdxs[i], xP.size(), xN.size());	
+			printf("Warning %s:%d not enough training sample for r[%d] = %d. P = %lu, N = %lu\n", __FILE__, __LINE__, i, _svmSzIdxs[i], xP.size(), xN.size());	
 		for (size_t k = 0; k < xP.size(); k++)
 			CV_Assert(xP[k].size() == Size(1, 1) && xP[k].type() == CV_32F);
 
@@ -891,7 +891,7 @@ void Objectness::evaluatePerClassRecall(vector<vector<Vec4i>> &boxesTests, CStr 
 
 	for (int i = 0; i < TEST_NUM; i++)
 		if ((int)boxesTests[i].size() < WIN_NUM){
-			printf("%s.dat: %d, %d\n", _S(_voc.testSet[i]), boxesTests[i].size(), WIN_NUM);
+			printf("%s.dat: %lu, %d\n", _S(_voc.testSet[i]), boxesTests[i].size(), WIN_NUM);
 			boxesTests[i].resize(WIN_NUM);
 		}
 	
@@ -1018,7 +1018,7 @@ void Objectness::evaluatePAMI12(CStr &saveName)
 		boxesTests[i].resize(numDet);
 		for (int j = 0; j < numDet; j++){
 			Vec4i &v = boxesTests[i][j];
-			fscanf(f, "%d %d %d %d %g\n", &v[0], &v[1], &v[2], &v[3], &score);
+			fscanf(f, "%d %d %d %d %lg\n", &v[0], &v[1], &v[2], &v[3], &score);
 		}
 		fclose(f);
 	}

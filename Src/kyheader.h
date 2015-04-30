@@ -29,7 +29,9 @@
 #include <random>
 //#include <atlstr.h>
 //#include <atltypes.h>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 #include <strstream>
 using namespace std;
 
