@@ -21,6 +21,7 @@ DataSetVOC::DataSetVOC(CStr &_wkDir)
 
 	trainNum = trainSet.size();
 	testNum = testSet.size();
+	printf("Loaded training: %d and testing: %d\n", trainNum, testNum);
 }
 
 
@@ -56,14 +57,20 @@ void DataSetVOC::loadAnnotations()
 	gtTrainBoxes.resize(trainNum);
 	gtTrainClsIdx.resize(trainNum);
 	for (int i = 0; i < trainNum; i++)
+	{	
+		// printf("%s\n", trainSet[i].c_str());
 		if (!loadBBoxes(trainSet[i], gtTrainBoxes[i], gtTrainClsIdx[i]))
 			return;
+	}
 
 	gtTestBoxes.resize(testNum);
 	gtTestClsIdx.resize(testNum);
 	for (int i = 0; i < testNum; i++)
+	{
+		// printf("%s\n", trainSet[i].c_str());
 		if(!loadBBoxes(testSet[i], gtTestBoxes[i], gtTestClsIdx[i]))
 			return;
+	}
 	printf("Load annotations finished\n");
 }
 
@@ -117,11 +124,12 @@ void DataSetVOC::loadBox(const FileNode &fn, vector<Vec4i> &boxes, vecI &clsIdx)
 	fn["bndbox"]["ymin"] >> strYmin;
 	fn["bndbox"]["xmax"] >> strXmax;
 	fn["bndbox"]["ymax"] >> strYmax;
+	// printf("    Box: %s %s %s %s %s", isDifficult.c_str(), strXmin.c_str(), strYmin.c_str(), strXmax.c_str(), strYmax.c_str());
 	boxes.push_back(Vec4i(atoi(_S(strXmin)), atoi(_S(strYmin)), atoi(_S(strXmax)), atoi(_S(strYmax))));
 
 	string clsName;
 	fn["name"]>>clsName;
-	printf("Class name: %s", clsName.c_str());
+	// printf("Class name: '%s'\n", clsName.c_str());
 	clsIdx.push_back(findFromList(clsName, classNames));	
 	CV_Assert_(clsIdx[clsIdx.size() - 1] >= 0, ("Invalidate class name\n"));
 }
@@ -129,6 +137,7 @@ void DataSetVOC::loadBox(const FileNode &fn, vector<Vec4i> &boxes, vecI &clsIdx)
 bool DataSetVOC::loadBBoxes(CStr &nameNE, vector<Vec4i> &boxes, vecI &clsIdx)
 {
 	string fName = format(_S(annoPathW), _S(nameNE));
+	// printf("Loading: '%s'\n", fName.c_str());
 	FileStorage fs(fName, FileStorage::READ);
 	FileNode fn = fs["annotation"]["object"];
 	boxes.clear();

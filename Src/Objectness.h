@@ -7,6 +7,7 @@ class Objectness
 public:
 	// base for window size quantization, feature window size (W, W), and non-maximal suppress size NSS
 	Objectness(DataSetVOC &voc, double base = 2, int W = 8, int NSS = 2);
+	Objectness(double base = 2, int W = 8, int NSS = 2);
 	~Objectness(void);
 
 	// Load trained model. 
@@ -61,7 +62,7 @@ private: // Parameters
 	int _Clr; //
 	static const char* _clrName[3];
 	
-	DataSetVOC &_voc; // The dataset for training, testing
+	DataSetVOC *_voc; // The dataset for training, testing
 	string _modelName, _trainDirSI, _bbResDir;
 
 	vecI _svmSzIdxs; // Indexes of active size. It's equal to _svmFilters.size() and _svmReW1f.rows

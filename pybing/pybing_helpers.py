@@ -55,9 +55,9 @@ def _extract_np_array(size_list, ptr_list, arr_t, arr_dtype,
 
 
 def _load_c_shared_library(METHODS):
-    ''' Loads the pyrf dynamic library and defines its functions '''
+    ''' Loads the pybing dynamic library and defines its functions '''
     root_dir = realpath(join('..', dirname(__file__)))
-    libname = 'pyrf'
+    libname = 'pybing'
     rf_clib, def_cfunc = ctypes_interface.load_clib(libname, root_dir)
     # Load and expose methods from lib
     for method in METHODS.keys():
