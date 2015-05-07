@@ -7,15 +7,7 @@
 #include "kyheader.h"
 #include "Objectness.h"
 #include "ValStructVec.h"
-
-#define DEBUG_PYBING 1
-
-#if DEBUG_PYBING
-    #define printDBG(msg) std::cout << "[pybing.c] " << msg << std::endl;
-    #define write(msg) std::cout << msg;
-#else
-    #define printDBG(msg);
-#endif
+#include "pybing_helpers.h"
 
 
 using namespace std;
@@ -31,7 +23,7 @@ extern "C"
 // TODO: REMOVE STRING WHERE CHAR* SHOULD BE USED
 PYBING Objectness *init(double base, int W, int NSS, bool verbose, bool quiet)
 {
-    printDBG("PYBING.init(" << base << ", " << W << ", " << NSS << ", "  << verbose << ", " << quiet << ")" )
+    printDBG("PYBING.init(" << base << ", " << W << ", " << NSS << ", "  << verbose << ", " << quiet << ")" );
     Objectness *detector = new Objectness(base, W, NSS);
     return detector;
 }
@@ -65,7 +57,7 @@ PYBING void detect(Objectness *detector, char **input_gpath_array, int _input_gp
         }
     }
 
-    //printDBG("PYBING.detect()" )
+    printDBG("PYBING.detect()" );
     
     #pragma omp parallel for if(!serial)
     for (int index = 0; index < _input_gpath_num; ++index)

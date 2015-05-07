@@ -33,6 +33,8 @@
 #include <omp.h>
 #endif
 #include <strstream>
+
+// KILL USING NAMESPACE 
 using namespace std;
 
 // TODO: reference additional headers your program requires here
@@ -49,7 +51,10 @@ using namespace std;
 #pragma comment( lib, cvLIB("core"))
 #pragma comment( lib, cvLIB("imgproc"))
 #pragma comment( lib, cvLIB("highgui"))
+
+// KILL USING NAMESPACE 
 using namespace cv;
+
 #ifdef WIN32
 /* windows stuff */
 #else

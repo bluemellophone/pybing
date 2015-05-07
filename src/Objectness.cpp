@@ -1,6 +1,7 @@
 #include "kyheader.h"
 #include "Objectness.h"
 #include "CmShow.h"
+#include "pybing_helpers.h"
 
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
 void print_null(const char *s) {}
@@ -10,7 +11,6 @@ const char* COLORs[CN] = {"'k'", "'b'", "'g'", "'r'", "'c'", "'m'", "'y'",
     "':k'", "':b'", "':g'", "':r'", "':c'", "':m'", "':y'",
     "'--k'", "'--b'", "'--g'", "'--r'", "'--c'", "'--m'", "'--y'"
 };
-
 
 // base for window size quantization, R orientation channels, and feature window size (_W, _W)
 Objectness::Objectness(DataSetVOC &voc, double base, int W, int NSS)
@@ -37,8 +37,12 @@ Objectness::Objectness(double base, int W, int NSS)
 	, _numT(_maxT - _minT + 1)
 	, _Clr(MAXBGR)
 {
+    printDBG("In Objectness Creation")
 	DataSetVOC *_voc = NULL;
+    printDBG("_voc = " << _voc)
+    printDBG("Pre setColorSpace")
 	setColorSpace(_Clr);
+    printDBG("Post setColorSpace")
 }
 
 Objectness::~Objectness(void)
@@ -47,19 +51,28 @@ Objectness::~Objectness(void)
 
 void Objectness::setColorSpace(int clr)
 {
+    printDBG("in setColorSpace") 
 	_Clr = clr;
-	if(_voc)
+    printDBG("_Clr = " << clr)
+    printDBG("_voc = " << _voc)
+	if(_voc != NULL)
 	{
+        printDBG("loading voc data")
 		_modelName  = _voc->resDir + format("ObjNessB%gW%d%s", _base, _W, _clrName[_Clr]);
 		_trainDirSI = _voc->localDir + format("TrainS1B%gW%d%s/", _base, _W, _clrName[_Clr]);
 		_bbResDir   = _voc->resDir + format("BBoxesB%gW%d%s/", _base, _W, _clrName[_Clr]);
 	}
 	else
 	{
-		_modelName  = "";
-		_trainDirSI = "";
-		_bbResDir   = "";
+        printDBG("loading no data")
+		_modelName  = cv::format("");
+		_trainDirSI = cv::format("");
+		_bbResDir   = cv::format("");
 	}
+    printDBG("_modelName = " << _modelName)
+    printDBG("_trainDirSI = " << _trainDirSI)
+    printDBG("_bbResDir = " << _bbResDir)
+    printDBG("end of setColorSpace") 
 }
 
 int Objectness::loadTrainedModel(string modelName) // Return -1, 0, or 1 if partial, none, or all loaded
