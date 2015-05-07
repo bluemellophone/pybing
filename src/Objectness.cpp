@@ -23,12 +23,14 @@ Objectness::Objectness(DataSetVOC &voc, double base, int W, int NSS)
 	, _numT(_maxT - _minT + 1)
 	, _Clr(MAXBGR)
 {
-	DataSetVOC *_voc = &voc;
+	DataSetVOC *_voc = &voc;  // This seems like an error
+    //_voc = &voc; // probbly should be this instead
 	setColorSpace(_Clr);
 }
 
-Objectness::Objectness(double base, int W, int NSS)
-	: _base(base)
+Objectness::Objectness(double base, int W, int NSS) 
+    : _voc(NULL)
+	, _base(base)
 	, _W(W)
 	, _NSS(NSS)
 	, _logBase(log(_base))
@@ -37,12 +39,9 @@ Objectness::Objectness(double base, int W, int NSS)
 	, _numT(_maxT - _minT + 1)
 	, _Clr(MAXBGR)
 {
-    printDBG("In Objectness Creation")
-	DataSetVOC *_voc = NULL;
-    printDBG("_voc = " << _voc)
-    printDBG("Pre setColorSpace")
+    //printDBG("In Objectness Creation")
+    //printDBG("_voc = " << _voc)
 	setColorSpace(_Clr);
-    printDBG("Post setColorSpace")
 }
 
 Objectness::~Objectness(void)

@@ -1,5 +1,4 @@
-
-#define DEBUG_PYBING 1
+#define DEBUG_PYBING 0
 
 #if DEBUG_PYBING
     #define printDBG(msg) std::cout << "[pybing.c] " << msg << std::endl;
