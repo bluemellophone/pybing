@@ -7,12 +7,14 @@ import ctypes as C
 import utool as ut
 import numpy as np
 import time
+from os.path import join
 from pybing.pybing_helpers import (_load_c_shared_library, _cast_list_to_c, _extract_np_array)
 
 
 VERBOSE_BING = ut.get_argflag('--verbbing') or ut.VERBOSE
 QUIET_BING   = ut.get_argflag('--quietbing') or ut.QUIET
 
+VOC2007_MODEL_URL = 'https://www.dropbox.com/s/0i3rsj4cfilr2k3/bing.zip?dl=0'
 
 #============================
 # CTypes Interface Data Types
@@ -95,7 +97,7 @@ BING_CLIB = _load_c_shared_library(METHODS)
 #=================================
 class BING_Detector(object):
 
-    def __init__(bing, verbose=VERBOSE_BING, quiet=QUIET_BING, **kwargs):
+    def __init__(bing, default=True, verbose=VERBOSE_BING, quiet=QUIET_BING, **kwargs):
         '''
             Create the C object for the PyBING detector.
 
@@ -136,6 +138,12 @@ class BING_Detector(object):
 
         if bing.verbose and not bing.quiet:
             print('[pybing.py] Finished Create New BING Object')
+
+        if default:
+            model_path = ut.grab_zipped_url(VOC2007_MODEL_URL, appname='pybing')
+            model_path = join(model_path, 'model')
+            print('Loading models: %r' % (model_path, ))
+            bing.model(model_path)
 
     def model(bing, model_path, **kwargs):
         '''
