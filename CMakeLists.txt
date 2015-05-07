@@ -63,16 +63,16 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ftree-vectorize")
 endif()
 
-add_library(LIBLINEAR  SHARED
+add_library(LIBLINEAR
     src/LibLinear/linear.cpp 
     src/LibLinear/linear.h 
     src/LibLinear/train.c 
     src/LibLinear/tron.cpp 
     src/LibLinear/tron.h)
 
-target_link_libraries(LIBLINEAR  ${EXTERNAL_LIBS})
+# target_link_libraries(LIBLINEAR  ${EXTERNAL_LIBS})
 
-add_library(BLAS  SHARED
+add_library(BLAS
     src/LibLinear/blas/blas.h 
     src/LibLinear/blas/blasp.h 
     src/LibLinear/blas/daxpy.c 
@@ -80,7 +80,7 @@ add_library(BLAS  SHARED
     src/LibLinear/blas/dnrm2.c 
     src/LibLinear/blas/dscal.c)
 
-target_link_libraries(BLAS ${EXTERNAL_LIBS})
+# target_link_libraries(BLAS ${EXTERNAL_LIBS})
 
 set(SOURCE_FILES 
     src/main.cpp
@@ -116,9 +116,6 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} SHARED 
     src/pybing.cpp
     ${SOURCE_FILES})
-
-
-
 
 ########################################
 ## set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
