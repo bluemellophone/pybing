@@ -43,6 +43,4 @@ def test_pybing():
 
 
 if __name__ == '__main__':
-    test_locals = utool.run_test(test_pybing)
-    exec(utool.execstr_dict(test_locals, 'test_locals'))
-    exec(utool.ipython_execstr())
+    test_pybing()

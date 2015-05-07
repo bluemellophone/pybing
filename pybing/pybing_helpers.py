@@ -3,6 +3,7 @@
 #============================
 from __future__ import absolute_import, division, print_function
 from os.path import join, realpath, dirname
+import utool as ut
 import cv2
 import random
 import numpy as np
@@ -56,6 +57,8 @@ def _extract_np_array(size_list, ptr_list, arr_t, arr_dtype,
 
 def _load_c_shared_library(METHODS):
     ''' Loads the pybing dynamic library and defines its functions '''
+    if ut.VERBOSE:
+        print('_load_c_shared_library')
     root_dir = realpath(join('..', dirname(__file__)))
     libname = 'pybing'
     rf_clib, def_cfunc = ctypes_interface.load_clib(libname, root_dir)

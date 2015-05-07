@@ -14,6 +14,7 @@ if (APPLE AND CLANG2)
     set(CMAKE_CXX_COMPILER "clang2++")
 endif()
 
+
 #######################################
 project(pybing) #### !!!!IMPORTANT!!!! THIS MUST BE DOWN HERE FOR CLANG2
 set(CMAKE_BUILD_TYPE "Release")
@@ -46,8 +47,8 @@ find_package( OpenMP )
 IF(OPENMP_FOUND)
     message("Found OpenMP! ^_^")
     # add flags for OpenMP
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS} -fopenmp")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -fopenmp")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${OpenMP_C_FLAGS} ${OpenMP_SHARED_LINKER_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_C_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 ELSE()
@@ -56,22 +57,28 @@ ENDIF()
 
 #######################################
 
-list( APPEND CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -ftree-vectorize")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -ftree-vectorize")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ftree-vectorize")
 
-add_library(LIBLINEAR 
+
+add_library(LIBLINEAR  SHARED
     src/LibLinear/linear.cpp 
     src/LibLinear/linear.h 
     src/LibLinear/train.c 
     src/LibLinear/tron.cpp 
     src/LibLinear/tron.h)
 
-add_library(BLAS 
+target_link_libraries(LIBLINEAR  ${EXTERNAL_LIBS})
+
+add_library(BLAS  SHARED
     src/LibLinear/blas/blas.h 
     src/LibLinear/blas/blasp.h 
     src/LibLinear/blas/daxpy.c 
     src/LibLinear/blas/ddot.c 
     src/LibLinear/blas/dnrm2.c 
     src/LibLinear/blas/dscal.c)
+
+target_link_libraries(BLAS ${EXTERNAL_LIBS})
 
 set(SOURCE_FILES 
     src/main.cpp
@@ -105,14 +112,16 @@ set(SOURCE_FILES
 #     ${SOURCE_FILES})
 
 add_library(${PROJECT_NAME} SHARED 
-	src/pybing.cpp
-	${SOURCE_FILES})
+    src/pybing.cpp
+    ${SOURCE_FILES})
 
 
-#######################################
-# set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
-# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
-#######################################
-# target_link_libraries(bing ${OpenCV_LIBS} ${EXTERNAL_LIBS})
+
+########################################
+## set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
+## set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+########################################
+## target_link_libraries(bing ${OpenCV_LIBS} ${EXTERNAL_LIBS})
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${EXTERNAL_LIBS})

@@ -18,9 +18,13 @@ fi
 cmake $CONFIG -G 'Unix Makefiles' ..
 #################################
 echo 'Building with make'
-export NCPUS=$(grep -c ^processor /proc/cpuinfo)
-export NCPUS=1
-make -j$NCPUS -w
+if [[ "$OSTYPE" == "msys"* ]]; then
+    make || { echo "FAILED MAKE" ; exit 1; }
+else
+    export NCPUS=$(grep -c ^processor /proc/cpuinfo)
+    export NCPUS=1
+    make -j$NCPUS || { echo "FAILED MAKE" ; exit 1; }
+fi
 #################################
 echo 'Moving the shared library'
 cp -v lib* ../pybing

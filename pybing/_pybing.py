@@ -115,18 +115,27 @@ class BING_Detector(object):
 
         # Default values
         params = odict([
-            ('base',       2),
+            ('base',       2.0),
             ('W',          8),
             ('NNS',        2),
             ('verbose',    verbose),
             ('quiet',      quiet),
         ])
         params.update(kwargs)
-        params_list = params.values()
+        params_list = list(params.values())
 
         if bing.verbose and not bing.quiet:
-            print('[pybing py] New BING Object Created')
+            """ debug with dmesg | tail -n 200 """
+            print('[pybing.py] Start Create New BING Object')
+            ut.print_dict(params)
+            print('[pybing.py] params_list = %r' % (params_list,))
+            print('[pybing.py] type of params = %r' % (list(map(type, params_list)),))
+            pass
+
         bing.detector_c_obj = BING_CLIB.init(*params_list)
+
+        if bing.verbose and not bing.quiet:
+            print('[pybing.py] Finished Create New BING Object')
 
     def model(bing, model_path, **kwargs):
         '''
