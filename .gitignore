@@ -23,3 +23,5 @@
 *.pyc
 build/*
 bing
+test_times.txt
+*.egg-info

@@ -101,8 +101,8 @@ set(SOURCE_FILES
     src/LibLinear/blas/dnrm2.c 
     src/LibLinear/blas/dscal.c)
 
-add_executable(bing 
-    ${SOURCE_FILES})
+# add_executable(bing 
+#     ${SOURCE_FILES})
 
 add_library(${PROJECT_NAME} SHARED 
 	src/pybing.cpp
@@ -114,5 +114,5 @@ add_library(${PROJECT_NAME} SHARED
 # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 #######################################
-target_link_libraries(bing ${OpenCV_LIBS} ${EXTERNAL_LIBS})
+# target_link_libraries(bing ${OpenCV_LIBS} ${EXTERNAL_LIBS})
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${EXTERNAL_LIBS})

@@ -7,7 +7,7 @@ import ctypes as C
 import utool as ut
 import numpy as np
 import time
-from pybing_helpers import (_load_c_shared_library, _cast_list_to_c, _extract_np_array)
+from pybing.pybing_helpers import (_load_c_shared_library, _cast_list_to_c, _extract_np_array)
 
 
 VERBOSE_BING = ut.get_argflag('--verbbing') or ut.VERBOSE
@@ -291,21 +291,3 @@ class BING_Detector(object):
                 detector (object)
         '''
         pass
-
-
-if __name__ == '__main__':
-    bing = BING_Detector()
-    bing.model('/Datasets/VOC2007/model')
-
-    test_paths = [
-        '/Datasets/VOC2007/JPEGImages/000010.jpg',
-        '/Datasets/VOC2007/JPEGImages/000011.jpg',
-        '/Datasets/VOC2007/JPEGImages/000012.jpg',
-    ]
-
-    results = bing.detect(test_paths)
-    print(results)
-    for x in results:
-        print(len(x))
-        print(x[0])
-        print(len(x[1]))
