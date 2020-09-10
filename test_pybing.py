@@ -5,8 +5,8 @@ from pybing import BING_Detector
 import utool
 
 
-TEST_DATA_DETECT_URL = 'https://www.dropbox.com/s/vyhdb1kc64cfqc4/testdata_bing.zip?dl=0'
-TEST_DATA_MODEL_URL = 'https://www.dropbox.com/s/0i3rsj4cfilr2k3/bing.zip?dl=0'
+TEST_DATA_DETECT_URL = 'https://lev.cs.rpi.edu/public/data/testdata_bing.zip'
+TEST_DATA_MODEL_URL =  'https://lev.cs.rpi.edu/public/models/bing.zip'
 
 
 def test_pybing():

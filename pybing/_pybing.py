@@ -14,7 +14,7 @@ from pybing.pybing_helpers import (_load_c_shared_library, _cast_list_to_c, _ext
 VERBOSE_BING = ut.get_argflag('--verbbing') or ut.VERBOSE
 QUIET_BING   = ut.get_argflag('--quietbing') or ut.QUIET
 
-VOC2007_MODEL_URL = 'https://www.dropbox.com/s/0i3rsj4cfilr2k3/bing.zip?dl=0'
+VOC2007_MODEL_URL = 'https://lev.cs.rpi.edu/public/models/bing.zip'
 
 #============================
 # CTypes Interface Data Types
@@ -217,7 +217,7 @@ class BING_Detector(object):
                 if not params['quiet']:
                     print('[pybing py] Detecting with %d CPUs' % (cpu_count, ))
                 params['batch_size'] = cpu_count
-            except:
+            except Exception:
                 params['batch_size'] = 8
 
         # Run training algorithm
